@@ -1,5 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import ResponsiveComponent from './ResponsiveComponent';
 
 const CustomButton = ({ title, onPress, style, textStyle }) => {
   return (

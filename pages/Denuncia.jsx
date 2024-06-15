@@ -1,28 +1,20 @@
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import {
-  TextInput,
-  View,
-  StyleSheet,
-  Alert,
-  Image,
-  Text,
-  Platform,
-} from "react-native";
-import { CheckBox } from "react-native-elements";
-import { useEffect, useState, useRef } from "react";
-import { Camera } from "expo-camera";
-import * as MediaLibrary from "expo-media-library";
-import * as ImagePicker from "expo-image-picker";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, TextInput, Image, Platform, Alert } from 'react-native';
+import { CheckBox } from 'react-native-elements';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
+import ResponsiveComponent from '../components/ResponsiveComponent';
+import * as MediaLibrary from 'expo-media-library';
+import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 import * as FileSystem from 'expo-file-system';
-import LoadingModal from '../components/ModalLoading'
+import LoadingModal from '../components/ModalLoading';
 
 export default function Denuncia({ navigation }) {
-  const [endereco, setEndereco] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [descricao, setDescricao] = useState("");
+  const [endereco, setEndereco] = useState('');
+  const [bairro, setBairro] = useState('');
+  const [cidade, setCidade] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [checkedLocal, setCheckedLocal] = useState(false);
   const [checkedAnonimo, setCheckedAnonimo] = useState(false);
   const [permissionCamera, setPermissionCamera] = useState(null);
@@ -33,19 +25,18 @@ export default function Denuncia({ navigation }) {
 
   useEffect(() => {
     (async () => {
-      MediaLibrary.requestPermissionsAsync();
-      const cameraStatus = await Camera.requestCameraPermissionsAsync();
-      setPermissionCamera(cameraStatus.status === "granted");
-      const galeryStatus =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      setPermissionGalery(galeryStatus === "granted");
+      await MediaLibrary.requestPermissionsAsync();
+      const cameraStatus = await ImagePicker.requestCameraPermissionsAsync();
+      setPermissionCamera(cameraStatus.status === 'granted');
+      const galeryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      setPermissionGalery(galeryStatus.status === 'granted');
     })();
   }, []);
 
   const openCamera = async () => {
-    const { status } = await Camera.requestCameraPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permissão de câmera necessária");
+    const { status } = await ImagePicker.requestCameraPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permissão de câmera necessária');
       return;
     }
 
@@ -55,7 +46,7 @@ export default function Denuncia({ navigation }) {
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.cancelled) {
       setImage(result.assets[0].uri);
     }
 
@@ -63,10 +54,10 @@ export default function Denuncia({ navigation }) {
     setBase64Image(base64);
   };
 
-  const opengalery = async () => {
+  const openGallery = async () => {
     const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
-    if (status !== "granted") {
-      Alert.alert("Permissão da Galeria Necessária");
+    if (status !== 'granted') {
+      Alert.alert('Permissão da Galeria Necessária');
       return;
     }
 
@@ -77,7 +68,7 @@ export default function Denuncia({ navigation }) {
       quality: 1,
     });
 
-    if (!result.canceled) {
+    if (!result.cancelled) {
       setImage(result.assets[0].uri);
     }
 
@@ -88,12 +79,12 @@ export default function Denuncia({ navigation }) {
   const handleSubmit = async () => {
     const formData = {
       data: new Date().toISOString('yyyy/MM/dd'),
-      endereco, 
+      endereco,
       bairro,
       cidade,
       descricao,
-      denunciaAnonima: checkedAnonimo
-    }
+      denunciaAnonima: checkedAnonimo,
+    };
 
     if (image) {
       formData.imagem = base64Image;
@@ -102,128 +93,127 @@ export default function Denuncia({ navigation }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://10.1.198.26:8080/foco/notificar",
+        'http://10.1.198.26:8080/foco/notificar',
         formData,
       );
 
       if (response.status === 200) {
-        Alert.alert("Sucesso", "Denúncia enviada com sucesso!");
-        setEndereco("");
-        setBairro("");
-        setCidade("");
-        setDescricao("");
+        Alert.alert('Sucesso', 'Denúncia enviada com sucesso!');
+        setEndereco('');
+        setBairro('');
+        setCidade('');
+        setDescricao('');
         setCheckedAnonimo(false);
-        setImage(null); 
+        setImage(null);
         setLoading(false);
       } else {
-        Alert.alert("Erro", "Falha ao enviar denúncia.");
+        Alert.alert('Erro', 'Falha ao enviar denúncia.');
         setLoading(false);
       }
     } catch (error) {
       console.error(error);
       setLoading(false);
-      Alert.alert("Erro", "Ocorreu um erro interno. Contate o suporte.");
+      Alert.alert('Erro', 'Ocorreu um erro interno. Contate o suporte.');
     }
   };
 
   return (
-    <View style={styles.container}>
-      <LoadingModal visible={loading} />
-      <Header
-        title={"Denúncia"}
-        mostrarDocs={true}
-        mostrarMenu={true}
-        iconLeft={'chevron-thin-left'}
-        funcao={() => navigation.navigate("RelatorioDenuncia")}
-        funcaoLeft={() =>navigation.navigate("Home")}
-      ></Header>
-      <View style={styles.container2}>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Endereço"
-            style={styles.input}
-            value={endereco}
-            onChangeText={setEndereco}
-          />
-          <TextInput
-            placeholder="Bairro"
-            style={styles.input}
-            value={bairro}
-            onChangeText={setBairro}
-          />
-          <TextInput
-            placeholder="Cidade/Estado"
-            style={styles.input}
-            value={cidade}
-            onChangeText={setCidade}
-          />
-          <TextInput
-            placeholder="Descrição"
-            multiline
-            numberOfLines={4}
-            style={styles.textArea}
-            value={descricao}
-            onChangeText={setDescricao}
-          />
-
-        </View>
-        <View style={styles.checkContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <CheckBox
-              checked={checkedLocal}
-              onPress={() => setCheckedLocal(!checkedLocal)}
-              checkedColor="#000"
-              uncheckedColor="#000"
+    <ResponsiveComponent>
+      <View style={styles.container}>
+        <LoadingModal visible={loading} />
+        <Header
+          title={'Denúncia'}
+          mostrarDocs={true}
+          mostrarMenu={true}
+          iconLeft={'chevron-thin-left'}
+          funcao={() => navigation.navigate('RelatorioDenuncia')}
+          funcaoLeft={() => navigation.navigate('Home')}
+        />
+        <View style={styles.contentContainer}>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Endereço"
+              style={styles.input}
+              value={endereco}
+              onChangeText={setEndereco}
             />
-            <Text style={{ marginStart: -15 }}>
-              Quer usar a localização atual?
-            </Text>
-          </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <CheckBox
-              checked={checkedAnonimo}
-              onPress={() => setCheckedAnonimo(!checkedAnonimo)}
-              checkedColor="#000"
-              uncheckedColor="#000"
+            <TextInput
+              placeholder="Bairro"
+              style={styles.input}
+              value={bairro}
+              onChangeText={setBairro}
             />
-            <Text style={{ marginStart: -15 }}>Denuncia anonima?</Text>
+            <TextInput
+              placeholder="Cidade/Estado"
+              style={styles.input}
+              value={cidade}
+              onChangeText={setCidade}
+            />
+            <TextInput
+              placeholder="Descrição"
+              multiline
+              numberOfLines={4}
+              style={styles.textArea}
+              value={descricao}
+              onChangeText={setDescricao}
+            />
+          </View>
+          <View style={styles.checkContainer}>
+            <View style={styles.checkBox}>
+              <CheckBox
+                checked={checkedLocal}
+                onPress={() => setCheckedLocal(!checkedLocal)}
+                checkedColor="#000"
+                uncheckedColor="#000"
+              />
+              <Text style={styles.checkBoxText}>Quer usar a localização atual?</Text>
+            </View>
+            <View style={styles.checkBox}>
+              <CheckBox
+                checked={checkedAnonimo}
+                onPress={() => setCheckedAnonimo(!checkedAnonimo)}
+                checkedColor="#000"
+                uncheckedColor="#000"
+              />
+              <Text style={styles.checkBoxText}>Denúncia anônima?</Text>
+            </View>
+          </View>
+          <View style={styles.imageContainer}>
+            {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
         </View>
-        <View style={styles.imageContainer}>
-          {image && <Image source={{ uri: image }} style={styles.image} />}
-        </View>
+        <Footer
+          nameIconLeft={'attachment'}
+          nameIconRight={'camera'}
+          texto={'CONFIRMAR'}
+          onPress={handleSubmit}
+          onPressRight={openCamera}
+          onPressLeft={openGallery}
+        />
       </View>
-      <Footer
-        nameIconLeft={"attachment"}
-        nameIconRight={"camera"}
-        texto={"CONFIRMAR"}
-        onPress={handleSubmit}
-        onPressRight={openCamera}
-        onPressLeft={opengalery}
-      ></Footer>
-    </View>
+    </ResponsiveComponent>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyItems: "center",
-    alignItems: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#FFFF',
   },
-  container2: {
-    width: "100%",
+  contentContainer: {
     flex: 1,
-    justifyItems: "center",
-    alignItems: "center",
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   inputContainer: {
-    marginTop: "2%",
-    width: "80%",
-    gap: 10,
+    width: '80%',
+    marginTop: '2%',
   },
   input: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 8,
     ...Platform.select({
       ios: {
@@ -233,31 +223,44 @@ const styles = StyleSheet.create({
         padding: 10,
       },
     }),
+    marginBottom: 12,
   },
   textArea: {
-    backgroundColor: "#fff",
+    backgroundColor: '#fff',
     borderRadius: 8,
     height: 100,
     padding: 16,
-    textAlignVertical: "top",
+    textAlignVertical: 'top',
+    marginBottom: 12,
   },
   checkContainer: {
-    width: "90%",
+    width: '90%',
+    marginBottom: 12,
+  },
+  checkBox: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  checkBoxText: {
+    marginLeft: 8,
   },
   imageContainer: {
     ...Platform.select({
       ios: {
-        height: "30%",
-        width: "50%",
+        width: '50%',
+        height: '30%',
       },
       android: {
-        height: "30%",
-        width: "55%",
+        width: '55%',
+        height: '30%',
       },
     }),
+    marginBottom: 12,
   },
   image: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
+    borderRadius: 8,
   },
 });
