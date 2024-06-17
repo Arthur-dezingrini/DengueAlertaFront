@@ -39,14 +39,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     width: "100%",
-    backgroundColor: "#F2F2F7",
+    backgroundColor: "#C7C7CC",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingHorizontal: 20,
-    paddingBottom: 0, // Espaçamento na parte inferior
-    height: 80, // Altura do footer
-    position: 'absolute', // Posição absoluta para fixar na parte inferior
-    bottom: 0, // Alinha o footer ao fundo da tela
+    height: 80, 
+    position: 'absolute', 
+    bottom: 0, 
   },
   icon: {
     fontSize: 25,

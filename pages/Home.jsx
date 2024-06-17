@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 import Header from '../components/Header';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
@@ -29,25 +29,27 @@ export default function Home({ navigation }) {
 
   if (errorMsg) {
     return (
-      <View style={styles.container}>
-        <Header
-          title="My App"
-          mostrarDocs={true}
-          iconLeft={'menu'}
-          mostrarMenu={true}
-          funcao={() => navigation.navigate('RelatorioDenuncia')}
-          funcaoLeft={() => navigation.navigate('Home')}
-        />
-        <View style={styles.messageContainer}>
-          <Text>{errorMsg}</Text>
+      <ResponsiveComponent>
+        <View style={styles.container}>
+          <Header
+            title="My App"
+            mostrarDocs={true}
+            iconLeft={'menu'}
+            mostrarMenu={true}
+            funcao={() => navigation.navigate('RelatorioDenuncia')}
+            funcaoLeft={() => navigation.navigate('Home')}
+          />
+          <View style={styles.messageContainer}>
+            <Text>{errorMsg}</Text>
+          </View>
+          <Footer
+            nameIconRight={'camera'}
+            nameIconLeft={'location'}
+            texto={'DENÚNCIA'}
+            onPress={() => navigation.navigate('Denuncia')}
+          />
         </View>
-        <Footer
-          nameIconRight={'camera'}
-          nameIconLeft={'location'}
-          texto={'DENÚNCIA'}
-          onPress={() => navigation.navigate('Denuncia')}
-        />
-      </View>
+      </ResponsiveComponent>
     );
   }
 
@@ -79,8 +81,6 @@ export default function Home({ navigation }) {
           </View>
         )}
         <Footer
-          nameIconRight={'camera'}
-          nameIconLeft={'location'}
           texto={'DENÚNCIA'}
           onPress={() => navigation.navigate('Denuncia')}
         />
@@ -92,13 +92,10 @@ export default function Home({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFF', // Cor de fundo do container principal
+    backgroundColor: '#FFFF',
   },
   map: {
-    width: '100%',
-    height: '70%', // Mapa ocupando 70% da altura disponível
+   flex: 1,
   },
   messageContainer: {
     flex: 1,

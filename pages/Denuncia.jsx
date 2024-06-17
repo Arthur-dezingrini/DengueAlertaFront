@@ -199,18 +199,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFFF',
   },
   contentContainer: {
     flex: 1,
     width: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   inputContainer: {
-    width: '80%',
-    marginTop: '2%',
+    width: '100%',
   },
   input: {
     backgroundColor: '#fff',
