@@ -22,7 +22,7 @@ const Footer = ({
         )}
 
         <View style={styles.textContainer}>
-          <CustomButton title={texto} onPress={onPress} />
+          <CustomButton style={styles.largebottom} title={texto} onPress={onPress} />
         </View>
 
         {nameIconRight && (
@@ -42,16 +42,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#C7C7CC",
     justifyContent: "space-around",
     alignItems: "center",
-    height: 80, 
+    height: '50', 
     position: 'absolute', 
-    bottom: 0, 
+    bottom: '50',
+    paddingBottom: '10',
+    paddingTop: 'auto',
+
   },
   icon: {
     fontSize: 25,
     color: "#fff",
   },
   containerItem: {
-    backgroundColor: "#C7C7CC",
+    backgroundColor: "#000",
     padding: 12,
     borderRadius: 12,
   },
@@ -61,6 +64,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 12,
   },
+  largebottom: {
+    width: '60%',
+    height: 'auto',
+    backgroundColor: '#000',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: '#fff',
+    fontSize: 18,
+  },
+
+
 });
 
 export default Footer;

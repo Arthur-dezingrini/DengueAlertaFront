@@ -17,7 +17,7 @@ export default function Home({ navigation }) {
         setErrorMsg('É necessário a localização para visualizar o mapa');
         return;
       }
-      
+
       try {
         let location = await Location.getCurrentPositionAsync({});
         setLocation(location);
@@ -65,16 +65,18 @@ export default function Home({ navigation }) {
           funcaoLeft={() => navigation.navigate('Home')}
         />
         {location ? (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.005,
-            }}
-            showsUserLocation={true}
-          />
+          <View style={styles.mapContainer}>
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+              }}
+              showsUserLocation={true}
+            />
+          </View>
         ) : (
           <View style={styles.messageContainer}>
             <Text>Carregando mapa...</Text>
@@ -94,8 +96,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#FFFF',
   },
+  mapContainer: {
+    flexGrow: 15,
+  },
   map: {
-   flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
   messageContainer: {
     flex: 1,

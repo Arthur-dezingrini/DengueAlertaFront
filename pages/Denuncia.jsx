@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, TextInput, Image, Platform, Alert } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image, Platform, Alert, ScrollView } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -129,6 +129,7 @@ export default function Denuncia({ navigation }) {
           funcao={() => navigation.navigate('RelatorioDenuncia')}
           funcaoLeft={() => navigation.navigate('Home')}
         />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.contentContainer}>
           <View style={styles.inputContainer}>
             <TextInput
@@ -182,6 +183,7 @@ export default function Denuncia({ navigation }) {
             {image && <Image source={{ uri: image }} style={styles.image} />}
           </View>
         </View>
+        </ScrollView>
         <Footer
           nameIconLeft={'attachment'}
           nameIconRight={'camera'}
@@ -197,8 +199,12 @@ export default function Denuncia({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    padding: 20,
   },
   contentContainer: {
     flex: 1,
@@ -209,16 +215,13 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   input: {
+    paddingStart: 16,
     backgroundColor: '#fff',
     borderRadius: 8,
-    ...Platform.select({
-      ios: {
-        padding: 16,
-      },
-      android: {
-        padding: 10,
-      },
-    }),
+    borderColor: '#000', 
+    borderWidth: 1,
+    padding: 5,
+    height: 40,
     marginBottom: 12,
   },
   textArea: {
@@ -228,15 +231,21 @@ const styles = StyleSheet.create({
     padding: 16,
     textAlignVertical: 'top',
     marginBottom: 12,
+    borderColor: '#000',
+    borderWidth: 1,
   },
   checkContainer: {
-    width: '90%',
+    width: '110%',
     marginBottom: 12,
   },
   checkBox: {
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 8,
+    textShadowColor: '#000',
+    textShadowOffset: { width: 0.5, height: 0.5 },
+    textShadowRadius: 1,
+
   },
   checkBoxText: {
     marginLeft: 8,
@@ -250,9 +259,9 @@ const styles = StyleSheet.create({
       android: {
         width: '55%',
         height: '30%',
+        backgroundColor: '#000',
       },
     }),
-    marginBottom: 12,
   },
   image: {
     width: '100%',

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Image, TouchableOpacity, Platform } from "react-native";
 import Icon from "react-native-vector-icons/Entypo";
 
 const Header = ({
@@ -43,10 +43,19 @@ const styles = StyleSheet.create({
   headerContainer: {
     flexDirection: "row",
     width: "100%",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    // paddingHorizontal: 20,
+    // paddingVertical: 10,
     backgroundColor: "#C7C7CC",
-    height: 80,
+    // height: 100,
+    ...Platform.select({
+      ios: {
+        padding: 16,
+      },
+      android: {
+        padding: 10,
+        height: 60,
+      },
+    }),
   },
   titleContainer: {
     flex: 1,
@@ -67,13 +76,15 @@ const styles = StyleSheet.create({
   },
   titleTextSolo: {
     color: "#fff",
-    fontSize: 22,
+    fontSize: 30,
+    fontStyle: "bold",
+
   },
   logo: {
     width: 40,
     height: 40,
     marginLeft: 10,
-  },
+  }, 
   iconContainer: {
     padding: 5,
   },

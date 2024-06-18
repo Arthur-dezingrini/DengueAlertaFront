@@ -6,6 +6,8 @@ import {
   Dimensions,
   ActivityIndicator,
   SafeAreaView,
+  Platform,
+
 } from "react-native";
 
 const ResponsiveComponent = ({ children }) => {
@@ -37,6 +39,8 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: '#C7C7CC',
     flex: 1,
+    paddingTop: 40,
+    paddingBottom: 0,
   },
   container: {
     flex: 1,
