@@ -43,8 +43,6 @@ export default function Home({ navigation }) {
             <Text>{errorMsg}</Text>
           </View>
           <Footer
-            nameIconRight={'camera'}
-            nameIconLeft={'location'}
             texto={'DENÚNCIA'}
             onPress={() => navigation.navigate('Denuncia')}
           />

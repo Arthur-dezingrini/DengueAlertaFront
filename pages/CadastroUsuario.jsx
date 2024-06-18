@@ -14,12 +14,12 @@ import CustomButton from "../components/CustomButton";
 import axios from "axios";
 
 export default function CadastroUsuario() {
-  const [Nome, setNome] = useState("");
+  const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
-  const [Cpf, setCpf] = useState("");
-  const [Celular, setCelular] = useState("");
-  const [Senha, setSenha] = useState("");
-  const [SenhaConfirmation, setSenhaConfirmation] = useState("");
+  const [cpf, setCpf] = useState("");
+  const [celular, setCelular] = useState("");
+  const [senha, setSenha] = useState("");
+  const [senhaConfirmation, setSenhaConfirmation] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showPasswordConfirm, setShowPasswordConfirm] = useState(false);
 
@@ -35,55 +35,55 @@ export default function CadastroUsuario() {
 
   const cadastrar = async (e) => {
     e.preventDefault();
-    if (Senha != SenhaConfirmation) {
-        return
+    if (senha != senhaConfirmation) {
+      return;
     }
 
-    const cpfInt = parseInt(Cpf);
-    const celularInt = parseInt(Celular);
+    const cpfInt = parseInt(cpf);
+    const celularInt = parseInt(celular);
 
     const usuarioDTO = {
-      Nome,
+      nome,
       email,
-      Cpf: cpfInt,
-      Celular: celularInt,
-      Senha
+      cpf: cpfInt,
+      celular: celularInt,
+      senha,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://10.1.198.26:8080/usuario/cadastrar",
+        usuarioDTO
+      );
+      if (response.status === 200) {
+        setNome("");
+        setEmail("");
+        setCpf("");
+        setCelular("");
+        setSenha("");
+        setConfirmarSenha("");
+      }
+    } catch (error) {
+      Alert.alert("Error", "alguma coisa deu errada, contate o suporte");
+    }
   };
-
-  console.log(usuarioDTO)
-
-  try {
-    const response = await axios.post('http://10.1.198.26:8080/usuario/cadastrar', usuarioDTO);
-    console.log(response)
-    setNome("");
-    setEmail("");
-    setCpf("");
-    setCelular("");
-    setSenha("");
-    setConfirmarSenha("");
-} catch (error) {
-    Alert.alert('Error', "alguma coisa deu errada, contate o suporte")
-}
-  }
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{gap: 25}}>
+      <View style={{ gap: 25 }}>
         <View style={styles.tituloContainer}>
           <Image
             source={require("../assets/images/Logo.png")}
             style={styles.logo}
           ></Image>
-          <Text style={{ fontSize: 40, fontWeight: "bold", color: "#fff" }}>
-            CADASTRO
-          </Text>
+          <Text style={styles.titulo}>CADASTRO</Text>
         </View>
 
         <View style={styles.inputContainer}>
           <View style={styles.inputArea}>
             <TextInput
               placeholder="Nome"
-              value={Nome}
+              value={nome}
               onChangeText={setNome}
               style={styles.input}
               placeholderTextColor="#888888"
@@ -101,7 +101,7 @@ export default function CadastroUsuario() {
           <View style={styles.inputArea}>
             <TextInput
               placeholder="CPF"
-              value={Cpf}
+              value={cpf}
               onChangeText={setCpf}
               style={styles.input}
               placeholderTextColor="#888888"
@@ -111,7 +111,7 @@ export default function CadastroUsuario() {
           <View style={styles.inputArea}>
             <TextInput
               placeholder="Celular"
-              value={Celular}
+              value={celular}
               onChangeText={setCelular}
               style={styles.input}
               placeholderTextColor="#888888"
@@ -121,7 +121,7 @@ export default function CadastroUsuario() {
           <View style={styles.inputArea}>
             <TextInput
               placeholder="Senha"
-              value={Senha}
+              value={senha}
               onChangeText={setSenha}
               style={styles.input}
               placeholderTextColor="#888888"
@@ -137,7 +137,7 @@ export default function CadastroUsuario() {
           <View style={styles.inputArea}>
             <TextInput
               placeholder="Confirmar Senha"
-              value={SenhaConfirmation}
+              value={senhaConfirmation}
               onChangeText={setSenhaConfirmation}
               style={styles.input}
               placeholderTextColor="#888888"
@@ -155,7 +155,11 @@ export default function CadastroUsuario() {
 
       <View style={styles.buttonContainter}>
         <CustomButton style={styles.btn} title={"Voltar"}></CustomButton>
-        <CustomButton onPress={cadastrar} style={styles.btn} title={"Confirmar"}></CustomButton>
+        <CustomButton
+          onPress={cadastrar}
+          style={styles.btn}
+          title={"Confirmar"}
+        ></CustomButton>
       </View>
     </SafeAreaView>
   );
@@ -176,6 +180,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  titulo: {
+    fontSize: 40,
+    fontWeight: "bold",
+    color: "#fff",
   },
   inputContainer: {
     alignItems: "center",

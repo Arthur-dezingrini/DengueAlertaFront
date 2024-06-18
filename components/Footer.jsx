@@ -14,12 +14,12 @@ const Footer = ({
 }) => {
   return (
     <ResponsiveComponent>
-      <View style={styles.container}>
-        {nameIconLeft && (
-          <TouchableOpacity onPress={onPressLeft} style={styles.containerItem}>
-            <Icon name={nameIconLeft} style={styles.icon} />
-          </TouchableOpacity>
-        )}
+    <View style={styles.container}>
+      {nameIconLeft && (
+        <TouchableOpacity onPress={onPressLeft} style={styles.containerItem}>
+          <Icon name={nameIconLeft} style={styles.icon} />
+        </TouchableOpacity>
+      )}
 
         <View style={styles.textContainer}>
           <CustomButton style={styles.largebottom} title={texto} onPress={onPress} />
@@ -40,21 +40,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
     backgroundColor: "#C7C7CC",
-    justifyContent: "space-around",
-    alignItems: "center",
-    height: '50', 
-    position: 'absolute', 
-    bottom: '50',
-    paddingBottom: '10',
-    paddingTop: 'auto',
-
+    justifyContent: 'space-around',
+    alignItems: 'flex-start',
+    paddingTop: 15,
+    height: 130,
   },
   icon: {
     fontSize: 25,
     color: "#fff",
   },
   containerItem: {
-    backgroundColor: "#000",
     padding: 12,
     borderRadius: 12,
   },
@@ -69,8 +64,6 @@ const styles = StyleSheet.create({
     height: 'auto',
     backgroundColor: '#000',
     borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
     color: '#fff',
     fontSize: 18,
   },
