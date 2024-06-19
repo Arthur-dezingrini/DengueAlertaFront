@@ -16,12 +16,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16
+    padding: 12
   },
   buttonText: {
     fontWeight: 590,
     color: '#515151',
-    fontSize: 20,
+    fontSize: 18,
   },  
 });
 

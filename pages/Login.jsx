@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'reac
 import Icon from 'react-native-vector-icons/Feather';
 import ResponsiveComponent from '../components/ResponsiveComponent';
 import CustomButton from '../components/CustomButton';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -17,7 +18,7 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <ResponsiveComponent>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
         <Image source={require('../assets/images/Logo.png')} style={styles.logo} />
 
@@ -81,7 +82,8 @@ const Login = ({ navigation }) => {
           </Text>
         </View>
       </View>
-    </ResponsiveComponent>
+    </SafeAreaView>
+    
   );
 };
 

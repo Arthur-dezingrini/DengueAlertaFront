@@ -5,6 +5,8 @@ import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 import Footer from '../components/Footer';
 import ResponsiveComponent from '../components/ResponsiveComponent';
+import { StatusBar } from 'expo-status-bar';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home({ navigation }) {
   const [location, setLocation] = useState(null);
@@ -29,7 +31,7 @@ export default function Home({ navigation }) {
 
   if (errorMsg) {
     return (
-      <ResponsiveComponent>
+      <SafeAreaView style={styles.safeArea}>
         <View style={styles.container}>
           <Header
             title="My App"
@@ -47,12 +49,12 @@ export default function Home({ navigation }) {
             onPress={() => navigation.navigate('Denuncia')}
           />
         </View>
-      </ResponsiveComponent>
+      </SafeAreaView>
     );
   }
 
   return (
-    <ResponsiveComponent>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Header
           title="My App"
@@ -62,8 +64,8 @@ export default function Home({ navigation }) {
           funcao={() => navigation.navigate('RelatorioDenuncia')}
           funcaoLeft={() => navigation.navigate('Home')}
         />
-        {location ? (
-          <View style={styles.mapContainer}>
+        <View style={styles.mapContainer}>
+          {location ? (
             <MapView
               style={styles.map}
               initialRegion={{
@@ -74,31 +76,40 @@ export default function Home({ navigation }) {
               }}
               showsUserLocation={true}
             />
-          </View>
-        ) : (
-          <View style={styles.messageContainer}>
-            <Text>Carregando mapa...</Text>
-          </View>
-        )}
+          ) : (
+            <View style={styles.messageContainer}>
+              <Text>Carregando mapa...</Text>
+            </View>
+          )}
+        </View>
         <Footer
-          texto={'DENÚNCIA'}
+          texto={'Denúncia'}
           onPress={() => navigation.navigate('Denuncia')}
         />
       </View>
-    </ResponsiveComponent>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: '#FFFF',
+  },
   container: {
     flex: 1,
+    justifyContent: 'space-between',
     backgroundColor: '#FFFF',
   },
   mapContainer: {
     flexGrow: 15,
+    // width: '100%',
+    alignItems: 'center',
+
   },
   map: {
     ...StyleSheet.absoluteFillObject,
+  
   },
   messageContainer: {
     flex: 1,

@@ -41,10 +41,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#C7C7CC",
     justifyContent: "space-around",
     alignItems: "center",
-    height: 60,
+    height: 70,
     paddingHorizontal: 20,
     position: "absolute",
     bottom: 0,
+    
   },
   icon: {
     fontSize: 25,
@@ -57,14 +58,20 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    
+    
   },
   largebutton: {
     width: "60%",
-    height: 60,
+    height: "auto",
     backgroundColor: "#000",
     borderRadius: 12,
     color: "#fff",
     fontSize: 18,
+    marginBottom: 10,
+    marginTop: 10,
+    alignItems: "center",
+
   },
 });
 

@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View, ScrollView, SafeAreaView } from "react-native";
 import Header from "../components/Header";
 import DenunciaIndividual from "../components/DenunciaIndividual";
 import Footer from "../components/Footer";
@@ -25,9 +25,9 @@ export default function RelatorioDenucias({ navigation }) {
   // }, []);
 
   return (
-    <ResponsiveComponent>
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <Header title={'Relatorio de Denuncias'}></Header>
+        <Header title={'Relatorio de Denuncias'} style={styles.header}></Header>
 
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           {denuncias.map((denuncia, index) => (
@@ -44,7 +44,7 @@ export default function RelatorioDenucias({ navigation }) {
           onPress={() => navigation.navigate("Home")}
         ></Footer>
       </View>
-    </ResponsiveComponent>
+    </SafeAreaView>
   );
 }
 
@@ -59,6 +59,15 @@ const styles = StyleSheet.create({
     padding: 16,
     gap: 16,
     width: "100%",
-    height: 540
+    height: 540,
+    flexGrow: 15,
+  },
+  header: {
+    backgroundColor: "#C7C7CC",
+    height: 10,
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
   },
 });
