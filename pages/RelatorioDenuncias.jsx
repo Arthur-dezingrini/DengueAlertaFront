@@ -25,7 +25,7 @@ export default function RelatorioDenucias({ navigation }) {
   // }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Header title={'Relatorio de Denuncias'} style={styles.header}></Header>
 
@@ -49,6 +49,11 @@ export default function RelatorioDenucias({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#fff",
+    marginTop: 30,
+  },
   container: {
     width: "100%",
     flex: 1,
@@ -63,8 +68,7 @@ const styles = StyleSheet.create({
     flexGrow: 15,
   },
   header: {
-    backgroundColor: "#C7C7CC",
-    height: 10,
+    backgroundColor: "#000",
     width: "100%",
     justifyContent: "center",
     alignItems: "center",

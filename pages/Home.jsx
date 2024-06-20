@@ -4,8 +4,6 @@ import Header from '../components/Header';
 import * as Location from 'expo-location';
 import MapView from 'react-native-maps';
 import Footer from '../components/Footer';
-import ResponsiveComponent from '../components/ResponsiveComponent';
-import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Home({ navigation }) {
@@ -62,7 +60,7 @@ export default function Home({ navigation }) {
           iconLeft={'menu'}
           mostrarMenu={true}
           funcao={() => navigation.navigate('RelatorioDenuncia')}
-          funcaoLeft={() => navigation.navigate('Home')}
+          funcaoLeft={() => navigation.navigate('Perfil')}
         />
         <View style={styles.mapContainer}>
           {location ? (

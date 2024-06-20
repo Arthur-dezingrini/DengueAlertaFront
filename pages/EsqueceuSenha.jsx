@@ -3,26 +3,22 @@ import React, {useState} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-// import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Perfil({ navigation }) {
-    const [nome, setNome] = useState('');
+export default function EsqueceuSenha({ navigation }) {
     const [email, setEmail] = useState('');
-
-
+    // const [senha, setSenha] = useState('');
 
     return (
         <SafeAreaView style={styles.safeArea}>
             <View style={styles.container}>
-                <Header title={'Perfil'} style={styles.header}></Header>
+                <Header title={'Esqueceu a senha'} style={styles.header}></Header>
 
                 <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                    <Text>Nome: {nome}</Text>
                     <Text>Email: {email}</Text>
                 </ScrollView>
                 <Footer
                     texto="Voltar"
-                    onPress={() => navigation.navigate("Home")}
+                    onPress={() => navigation.navigate("Login")}
                 ></Footer>
                 
             </View>
@@ -41,12 +37,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyItems: "center",
     },
-
     scrollViewContent: {
         alignItems: "center",
         justifyContent: "center",
     },
-
     header: {
         backgroundColor: "#000",
         width: "100%",
