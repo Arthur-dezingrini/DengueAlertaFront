@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { View, Text, StyleSheet, Image, TextInput, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import ResponsiveComponent from '../components/ResponsiveComponent';
 import CustomButton from '../components/CustomButton';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import axios from 'axios';
+import { AuthContext } from '../components/authProvider';
 
 const Login = ({ navigation }) => {
-  const [email, setEmail] = useState('');
+  const [cpf, setCpf] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const { login } = useContext(AuthContext);
 
   const olhoFechado = <Icon name='eye-off' size={18} color={'#88888'} />;
   const olhoAberto = <Icon name='eye' size={18} color={'#88888'} />;
@@ -16,6 +19,29 @@ const Login = ({ navigation }) => {
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  const logar = async () => {
+    const loginDTO = {
+      cpf: parseInt(cpf),
+      senha: password,
+    };
+
+    try {
+      const response = await axios.post(
+        'http://192.168.0.3:8080/usuario/login',
+        loginDTO
+      );
+      if (response.status === 200) {
+        console.log(response.data)
+        login(response.data.accessToken, response.data.userData);
+        navigation.navigate('Home')
+      } else {
+        Alert.alert("Ops!", "Usuario ou senha incorretos, tente novamente")
+      }
+    } catch (error) {
+      Alert.alert("Ops", error)
+    }
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -26,8 +52,8 @@ const Login = ({ navigation }) => {
           <View style={styles.inputArea}>
             <TextInput
               placeholder='CPF'
-              value={email}
-              onChangeText={setEmail}
+              value={cpf}
+              onChangeText={setCpf}
               style={styles.input}
               keyboardType={'number-pad'}
               placeholderTextColor="#888888"
@@ -58,7 +84,7 @@ const Login = ({ navigation }) => {
         <View style={styles.buttonContainer}>
           <CustomButton
             title="ENTRAR"
-            onPress={() => navigation.navigate('Home')}
+            onPress={logar}
             textStyle={styles.customButtonText}
           />
         </View>

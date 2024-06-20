@@ -43,25 +43,22 @@ export default function CadastroUsuario({ navigation }) {
 
     try {
       const response = await axios.post(
-        'http://10.1.198.26:8080/usuario/cadastrar',
+        'http://192.168.0.3:8080/usuario/cadastrar',
         usuarioDTO
       );
-      if (response.status === 200) {
-        Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+      console.log(response.data)
+      if (response.status == 201) {
+        Alert.alert('Sucesso', response.data);
         setNome('');
         setEmail('');
         setCpf('');
         setCelular('');
         setSenha('');
         setSenhaConfirmation('');
-      } else {
-        Alert.alert(
-          'Erro',
-          'Algo deu errado. Por favor, contate o suporte.'
-        );
+      } else if (response.status == 200) {
+        Alert.alert("Erro", response.data)
       }
     } catch (error) {
-      console.error('Erro ao cadastrar usuário:', error);
       Alert.alert('Erro', 'Algo deu errado. Por favor, contate o suporte.');
     }
   };

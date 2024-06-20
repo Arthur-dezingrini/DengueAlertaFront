@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext  } from "react";
 import {
   View,
   Text,
@@ -18,6 +18,7 @@ import axios from "axios";
 import * as FileSystem from "expo-file-system";
 import LoadingModal from "../components/ModalLoading";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { AuthContext } from "../components/authProvider";
 
 export default function Denuncia({ navigation }) {
   const [endereco, setEndereco] = useState("");
@@ -31,6 +32,7 @@ export default function Denuncia({ navigation }) {
   const [image, setImage] = useState(null);
   const [base64Image, setBase64Image] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user, token } = useContext(AuthContext);
 
   useEffect(() => {
     (async () => {
@@ -105,7 +107,15 @@ export default function Denuncia({ navigation }) {
 
     try {
       setLoading(true);
-      const response = await axios.post("http://10.1.198.26:8080/foco/notificar",formData);
+      const response = await axios.post(
+        "http://192.168.0.3:8080/foco/notificar",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.status === 200) {
         Alert.alert("Sucesso", "Denúncia enviada com sucesso!");
         setEndereco("");

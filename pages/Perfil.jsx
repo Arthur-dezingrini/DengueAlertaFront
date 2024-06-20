@@ -1,15 +1,14 @@
 import { View, StyleSheet, ScrollView, SafeAreaView, Text } from "react-native";
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { AuthContext } from "../components/authProvider";
+
 
 // import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Perfil({ navigation }) {
-    const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-
-
+    const { user } = useContext(AuthContext);
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -17,8 +16,8 @@ export default function Perfil({ navigation }) {
                 <Header title={'Perfil'} style={styles.header}></Header>
 
                 <ScrollView contentContainerStyle={styles.scrollViewContent}>
-                    <Text>Nome: {nome}</Text>
-                    <Text>Email: {email}</Text>
+                    <Text>Nome: {user.nome}</Text>
+                    <Text>Email: {user.email}</Text>
                 </ScrollView>
                 <Footer
                     texto="Voltar"
