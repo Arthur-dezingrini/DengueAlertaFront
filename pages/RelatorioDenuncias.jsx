@@ -16,7 +16,7 @@ export default function RelatorioDenucias({ navigation }) {
     const fetchDenuncias = async () => {
       try {
         const response = await axios.get(
-          "http://192.168.0.3:8080/foco/notificacoes", 
+          "https://denguealertaback-production.up.railway.app/foco/notificacoes", 
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -64,13 +64,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyItems: "center",
     alignItems: "center",
+    backgroundColor: "#eee",
+    
   },
   scrollViewContent: {
     padding: 16,
-    gap: 16,
-    width: "100%",
-    height: 540,
-    flexGrow: 15,
+    // gap: 16,
+    // width: "100%",
+    // height: 540,
+    flex: 1,
   },
   header: {
     backgroundColor: "#000",
@@ -78,5 +80,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-  },
+  }
 });

@@ -25,12 +25,13 @@ const Login = ({ navigation }) => {
       cpf: parseInt(cpf),
       senha: password,
     };
-
+    console.log(loginDTO);
     try {
       const response = await axios.post(
-        'http://denguealertaback-production.up.railway.app/usuario/login',
+        'https://denguealertaback-production.up.railway.app/usuario/login',
         loginDTO
       );
+      console.log(response)
       if (response.status === 200) {
         console.log(response.data)
         login(response.data.accessToken, response.data.userData);

@@ -108,7 +108,7 @@ export default function Denuncia({ navigation }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "http://192.168.0.3:8080/foco/notificar",
+        "https://denguealertaback-production.up.railway.app/foco/notificar",
         formData,
         {
           headers: {

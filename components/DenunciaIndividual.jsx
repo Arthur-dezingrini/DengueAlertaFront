@@ -1,10 +1,10 @@
 import { Image, View, Text, StyleSheet } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-export default function DenunciaIndividual({ url, status, endereco }) {
+export default function DenunciaIndividual({ url, status, endereco}) {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.imagemDenun}>
         <Image style={styles.image} source={{ uri: url }}></Image>
       </View>
       <View style={styles.textContainer}>
@@ -29,6 +29,16 @@ const styles = StyleSheet.create({
     height: 112,
     justifyContent: 'space-between',
     borderRadius: 12,
+    marginBottom: 16,
+    borderBlockEndColor: '#bbb',
+    borderBottomWidth: 1,
+    borderBottomColor: '#bbb',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
   image: {
     height: "100%",
@@ -42,5 +52,10 @@ const styles = StyleSheet.create({
   endereco: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
+  imagemDenun: {
+    height: '100%',
+    width: '50%',
+  },
+
 });

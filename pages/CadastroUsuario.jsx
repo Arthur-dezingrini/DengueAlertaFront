@@ -40,13 +40,13 @@ export default function CadastroUsuario({ navigation }) {
       celular: parseInt(celular),
       senha,
     };
-
+    console.log(usuarioDTO);
     try {
       const response = await axios.post(
-        'http://denguealertaback-production.up.railway.app/usuario/cadastrar',
+        'https://denguealertaback-production.up.railway.app/usuario/cadastrar',
         usuarioDTO
       );
-      console.log(response.data)
+      console.log(response)
       if (response.status == 201) {
         Alert.alert('Sucesso', response.data);
         setNome('');
@@ -60,6 +60,7 @@ export default function CadastroUsuario({ navigation }) {
       }
     } catch (error) {
       Alert.alert('Erro', 'Algo deu errado. Por favor, contate o suporte.');
+      console.log(error.response);
     }
   };
 
