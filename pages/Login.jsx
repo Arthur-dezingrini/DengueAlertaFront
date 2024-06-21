@@ -28,7 +28,7 @@ const Login = ({ navigation }) => {
 
     try {
       const response = await axios.post(
-        'http://192.168.0.3:8080/usuario/login',
+        'http://denguealertaback-production.up.railway.app/usuario/login',
         loginDTO
       );
       if (response.status === 200) {

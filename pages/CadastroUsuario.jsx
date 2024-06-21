@@ -43,7 +43,7 @@ export default function CadastroUsuario({ navigation }) {
 
     try {
       const response = await axios.post(
-        'http://192.168.0.3:8080/usuario/cadastrar',
+        'http://denguealertaback-production.up.railway.app/usuario/cadastrar',
         usuarioDTO
       );
       console.log(response.data)
