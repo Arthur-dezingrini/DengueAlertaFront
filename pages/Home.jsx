@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
 import Header from '../components/Header';
 import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 import Footer from '../components/Footer';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -76,7 +76,8 @@ export default function Home({ navigation }) {
             />
           ) : (
             <View style={styles.messageContainer}>
-              <Text>Carregando mapa...</Text>
+              <Text>Carregando mapa</Text>
+              <ActivityIndicator />
             </View>
           )}
         </View>
@@ -110,6 +111,8 @@ const styles = StyleSheet.create({
   
   },
   messageContainer: {
+    flexDirection: 'row',
+    gap: 5,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',

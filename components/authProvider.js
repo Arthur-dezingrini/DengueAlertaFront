@@ -9,7 +9,6 @@ export const AuthProvider = ({ children }) => {
     const login = (newToken, user) => {
         setToken(newToken);
         setUser(user);
-        console.log(user)
     };
 
     const logout = () => {

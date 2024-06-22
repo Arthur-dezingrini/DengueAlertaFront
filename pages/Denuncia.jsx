@@ -20,16 +20,17 @@ import LoadingModal from "../components/ModalLoading";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AuthContext } from "../components/authProvider";
 
-export default function Denuncia({ navigation }) {
-  const [endereco, setEndereco] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [descricao, setDescricao] = useState("");
+export default function Denuncia({ navigation, route }) {
+  const { denuncia } = route.params;
+  const [endereco, setEndereco] = useState(denuncia.endereco || "");
+  const [bairro, setBairro] = useState(denuncia.bairro || '');
+  const [cidade, setCidade] = useState(denuncia.cidade || '');
+  const [descricao, setDescricao] = useState(denuncia.descricao || '');
   const [checkedLocal, setCheckedLocal] = useState(false);
   const [checkedAnonimo, setCheckedAnonimo] = useState(false);
   const [permissionCamera, setPermissionCamera] = useState(null);
   const [permissionGalery, setPermissionGalery] = useState(null);
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(denuncia.imageUrl || '');
   const [base64Image, setBase64Image] = useState(null);
   const [loading, setLoading] = useState(false);
   const { user, token } = useContext(AuthContext);
@@ -108,7 +109,7 @@ export default function Denuncia({ navigation }) {
     try {
       setLoading(true);
       const response = await axios.post(
-        "https://denguealertaback-production.up.railway.app/foco/notificar",
+        "http://10.1.198.26:8080/foco/notificar",
         formData,
         {
           headers: {
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   scrollViewContent: {
-    flexGrow: 1,
+    height: '100%',
     marginTop: 20,
     marginBottom: 60,
   },

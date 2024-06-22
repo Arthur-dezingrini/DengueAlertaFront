@@ -25,15 +25,12 @@ const Login = ({ navigation }) => {
       cpf: parseInt(cpf),
       senha: password,
     };
-    console.log(loginDTO);
     try {
       const response = await axios.post(
-        'https://denguealertaback-production.up.railway.app/usuario/login',
+        'http://10.1.198.26:8080/usuario/login',
         loginDTO
       );
-      console.log(response)
       if (response.status === 200) {
-        console.log(response.data)
         login(response.data.accessToken, response.data.userData);
         navigation.navigate('Home')
       } else {

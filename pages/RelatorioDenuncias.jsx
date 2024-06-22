@@ -41,6 +41,7 @@ export default function RelatorioDenucias({ navigation }) {
               url={denuncia.imageUrl}
               endereco={denuncia.endereco}
               status={denuncia.status}
+              onPress={() => navigation.navigate("Denuncia", {denuncia})}
             ></DenunciaIndividual>
           ))}
         </ScrollView>
@@ -69,10 +70,7 @@ const styles = StyleSheet.create({
   },
   scrollViewContent: {
     padding: 16,
-    // gap: 16,
-    // width: "100%",
-    // height: 540,
-    flex: 1,
+    flexGrow: 1,
   },
   header: {
     backgroundColor: "#000",
