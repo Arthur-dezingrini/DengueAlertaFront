@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { View, StyleSheet, Text, ActivityIndicator, Alert } from 'react-native';
 import Header from '../components/Header';
 import * as Location from 'expo-location';
 import MapView, {Marker} from 'react-native-maps';
 import Footer from '../components/Footer';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { AuthContext } from "../components/authProvider";
+import axios from 'axios';
+
 
 export default function Home({ navigation }) {
+  const { user, token } = useContext(AuthContext);
+
+  
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [denuncias, setDenuncias] = useState(null);
 
-  useEffect(() => {
-    (async () => {
+  const fetchDenuncias = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         setErrorMsg('É necessário a localização para visualizar o mapa');
@@ -24,8 +31,27 @@ export default function Home({ navigation }) {
       } catch (error) {
         setErrorMsg('Erro ao obter a localização');
       }
-    })();
-  }, []);
+
+      try {        
+        const response = await axios.get(`https://denguealertaback-production.up.railway.app/foco/notificacoes?id=${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setDenuncias(response.data);
+      } catch (error) {
+        console.error(error);
+        Alert.alert("Erro ao carregar denúncias", error.message);
+      }
+
+    }
+
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchDenuncias();
+    }, [])
+  );
 
   if (errorMsg) {
     return (
@@ -73,7 +99,19 @@ export default function Home({ navigation }) {
                 longitudeDelta: 0.005,
               }}
               showsUserLocation={true}
-            />
+            >
+              {denuncias && denuncias.map((denuncia, index) => (
+                <Marker
+                  key={index}
+                  coordinate={{
+                    latitude: denuncia.latitude,
+                    longitude: denuncia.longitude,
+                  }}
+                  title={denuncia.endereco}
+                  description={denuncia.descricao}
+                />
+              ))}
+            </MapView>
           ) : (
             <View style={styles.messageContainer}>
               <Text>Carregando mapa</Text>

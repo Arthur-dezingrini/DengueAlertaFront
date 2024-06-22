@@ -31,16 +31,15 @@ export default function Perfil({ navigation }) {
   const defaultImage = require("../assets/images/fotoPadraoPerfil.png");
 
   const voltar = async () => {
-    console.log(user);
+    navigation.navigate("Home");
     const AlterarFotoDTO = {
       foto: base64Image,
       id: user.id,
     };
     if (base64Image) {
       try {
-        console.log(token);
         const response = await axios.post(
-          "http://10.1.198.26:8080/usuario/alterarFotoPerfil",
+          "https://denguealertaback-production.up.railway.app/usuario/alterarFotoPerfil",
           AlterarFotoDTO,
           {
             headers: {
@@ -48,11 +47,12 @@ export default function Perfil({ navigation }) {
             },
           }
         );
+        console.log(response.data)
+        user.foto = response.data
       } catch (error) {
         console.error(error);
       }
     }
-    navigation.navigate("Home");
   };
 
   useEffect(() => {

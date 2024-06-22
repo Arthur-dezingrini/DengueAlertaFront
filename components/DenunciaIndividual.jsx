@@ -6,7 +6,13 @@ export default function DenunciaIndividual({ url, status, endereco, onPress }) {
     <Pressable onPress={onPress}>
       <View on style={styles.container}>
         <View style={styles.imagemDenun}>
-          <Image style={styles.image} source={{ uri: url }}></Image>
+          {url ? (
+             <Image style={styles.image} source={{ uri: url }}></Image>
+          ) : (
+            <View style={styles.semImgaem}>
+              <Text>Sem Imagem</Text>
+            </View>
+          )}
         </View>
         <View style={styles.textContainer}>
           <View style={styles.endereco}>
@@ -47,6 +53,11 @@ const styles = StyleSheet.create({
   image: {
     height: "100%",
     width: 150,
+  },
+  semImgaem: {
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   textContainer: {
     justifyContent: "space-around",

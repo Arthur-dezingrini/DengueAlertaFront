@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Image, StyleSheet, TextInput, TouchableOpacity, Alert, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Image, StyleSheet, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { Text } from 'react-native-elements';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Feather';
@@ -45,7 +45,7 @@ export default function CadastroUsuario({ navigation }) {
         'https://denguealertaback-production.up.railway.app/usuario/cadastrar',
         usuarioDTO
       );
-      if (response.status == 201) {
+      if (response.status === 201) {
         Alert.alert('Sucesso', response.data);
         setNome('');
         setEmail('');
@@ -53,8 +53,8 @@ export default function CadastroUsuario({ navigation }) {
         setCelular('');
         setSenha('');
         setSenhaConfirmation('');
-      } else if (response.status == 200) {
-        Alert.alert("Erro", response.data)
+      } else if (response.status === 200) {
+        Alert.alert("Erro", response.data);
       }
     } catch (error) {
       Alert.alert('Erro', 'Algo deu errado. Por favor, contate o suporte.');
@@ -64,7 +64,7 @@ export default function CadastroUsuario({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.contentContainer}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView>
           <View style={styles.innerContainer}>
             <View style={styles.tituloContainer}>
               <Image
@@ -158,12 +158,12 @@ export default function CadastroUsuario({ navigation }) {
           title="Voltar"
           onPress={() => navigation.goBack()}
           style={styles.btn}
-          />
+        />
         <CustomButton
           onPress={cadastrar}
           title="Confirmar"
           style={styles.btn}
-          />
+        />
       </View>
     </SafeAreaView>
   );
@@ -231,10 +231,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#c7c7cc',
     borderTopWidth: 1,
     borderTopColor: '#c7c7cc',
+    marginBottom: 20
   },
   btn: {
     width: '40%',
     margin: 5,
   },
 });
-

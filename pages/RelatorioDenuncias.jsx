@@ -1,4 +1,4 @@
-import { StyleSheet, View, ScrollView, SafeAreaView } from "react-native";
+import { StyleSheet, View, ScrollView, SafeAreaView, Alert } from "react-native";
 import Header from "../components/Header";
 import DenunciaIndividual from "../components/DenunciaIndividual";
 import Footer from "../components/Footer";
@@ -14,28 +14,26 @@ export default function RelatorioDenucias({ navigation }) {
 
   useEffect(() => {
     const fetchDenuncias = async () => {
-      try {
-        const response = await axios.get(
-          "https://denguealertaback-production.up.railway.app/foco/notificacoes", 
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+      try {        
+        const response = await axios.get(`https://denguealertaback-production.up.railway.app/foco/notificacoes?id=${user.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        
         setDenuncias(response.data);
       } catch (error) {}
     };
 
     fetchDenuncias();
-  }, []);
+  }, [user.id, token]);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
         <Header title={'Relatorio de Denuncias'} style={styles.header}></Header>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          {denuncias.map((denuncia, index) => (
+          { denuncias && denuncias.map((denuncia, index) => (
             <DenunciaIndividual
               key={index}
               url={denuncia.imageUrl}

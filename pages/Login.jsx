@@ -27,7 +27,7 @@ const Login = ({ navigation }) => {
     };
     try {
       const response = await axios.post(
-        'http://10.1.198.26:8080/usuario/login',
+        'https://denguealertaback-production.up.railway.app/usuario/login',
         loginDTO
       );
       if (response.status === 200) {
