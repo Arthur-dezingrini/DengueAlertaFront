@@ -6,6 +6,8 @@ import Icon from 'react-native-vector-icons/Feather';
 import CustomButton from '../components/CustomButton';
 import axios from 'axios';
 
+/*teste de commit*/
+
 export default function CadastroUsuario({ navigation }) {
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
